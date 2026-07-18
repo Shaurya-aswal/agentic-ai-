@@ -17,15 +17,18 @@ if not groq_api_key:
     raise ValueError("groq_api_key is not set in the environment variables.")
 
 # initializing the Groq client with the API key
+
 client = Groq(api_key = groq_api_key)
 model  = "llama-3.3-70b-versatile"
 
 # opening the data of the resume from the pdf file
+
 pdf_path = "/Users/apple/agentic ai/week1/project/utils/resume_.pdf"
 pdf_reader = PdfReader(pdf_path)
 resume_text = pdf_reader.pages[0].extract_text()
 
 # defining the schema for the resume using pydantic
+
 class Resume(BaseModel):
     Experience : int
     Skills : str
@@ -53,6 +56,7 @@ resume_response = client.chat.completions.create(model = model,messages = resume
 resume_json = resume_response.choices[0].message.content
 
 ## matching the requirements with the resume
+
 class Match(BaseModel):
     eligible : str
     percentage : int
